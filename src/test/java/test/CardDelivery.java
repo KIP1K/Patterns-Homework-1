@@ -17,11 +17,13 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class CardDelivery {
     @BeforeEach
-    void setup() {open("http://localhost:9999");}
+    void setup() {
+        open("http://localhost:9999");
+    }
 
     @Test
     @DisplayName("Should successful plan meeting")
-    void shouldSuccessfulPlanMeeting (){
+    void shouldSuccessfulPlanMeeting() {
         DataGenerator.UserInfo validUser = DataGenerator.Registration.generateUser("ru");
         int dayToAddFirstMeeting = 4;
         String firstMeetingDate = DataGenerator.generateDate(dayToAddFirstMeeting);
@@ -37,7 +39,7 @@ public class CardDelivery {
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
         $("[data-test-id='success-notification'] .notification__content")
                 .shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate)).shouldBe(visible);
-        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT,Keys.HOME), Keys.BACK_SPACE);
+        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
         $("[data-test-id='replan-notification'] .notification__content")
